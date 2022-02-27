@@ -206,7 +206,7 @@ class Edit_entry(ttk.Frame):
                                      style="Button.TButton",
                                      cursor="hand2"
                                      )
-        self.status = ttk.Label(self, text="", relief=SUNKEN, anchor=W)
+        self.status = ttk.Label(self, text="Pasirinkite įrašą kurį norite redaguoti", relief=SUNKEN, anchor=W)
         scrollbar = Scrollbar(self)
         self.list = Listbox(self, yscrollcommand=scrollbar.set)
         self.update_list()
@@ -236,6 +236,7 @@ class Edit_entry(ttk.Frame):
             self.comment_input.delete(0, END)
             self.sum_input.insert(END, f"{to_edit.suma}")
             self.comment_input.insert(END, f"{to_edit.comments}")
+            self.status["text"] = ""
 
     def update_database(self):
         if self.list.curselection() != ():
@@ -251,7 +252,7 @@ class Edit_entry(ttk.Frame):
                 self.sum_input.delete(0, END)
                 self.comment_input.delete(0, END)
                 self.update_list()
-                self.status["text"] = 'Pakeitimai atlikti'
+                self.status["text"] = f'Atlikti {item_id} įrašo pakeitimai'
             else:
                 self.sum_input.delete(0, END)
                 self.status["text"] = 'Sumos laukelyje veskite tik skaičius (be "-" ženklo)'
@@ -264,3 +265,5 @@ class Edit_entry(ttk.Frame):
 
     def clean_status(self, event):
         self.status["text"] = ""
+        self.sum_input.delete(0, END)
+        self.comment_input.delete(0, END)
