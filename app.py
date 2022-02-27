@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from frames import Main_window, Naujas_irasas, Edit_entry
+from frames import Main_window, New_entry, Edit_entry
 
 
 COLOUR_PRIMARY = "#546E7A"
@@ -54,7 +54,7 @@ class Biudzetas(tk.Tk):
 
         self.frames = {}
 
-        for F in (Main_window, Naujas_irasas, Edit_entry):
+        for F in (Main_window, New_entry, Edit_entry):
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")

@@ -38,7 +38,7 @@ class Main_window(ttk.Frame):
         newentry_button = ttk.Button(
             self,
             text="Naujas įrašas",
-            command=lambda: controller.show_frame(Naujas_irasas),
+            command=lambda: controller.show_frame(New_entry),
             style="Button.TButton",
             cursor="hand2"
         )
@@ -115,17 +115,17 @@ class Main_window(ttk.Frame):
 
 
 
-class Naujas_irasas(ttk.Frame):
+class New_entry(ttk.Frame):
     def __init__(self, parent, controller):
         super().__init__(parent)
 
         self["style"] = "Background.TFrame"
 
         self.entry_type = tk.StringVar(self)
-        self.options = ["Išlaidos", "Pajamos"]
-
         self.suma = tk.StringVar(self)
         self.komentaras = tk.StringVar(self)
+
+        self.options = ["Išlaidos", "Pajamos"]
 
         self.type_lb = ttk.Label(self, text="Tipas", style="LightText.TLabel")
         self.sum_lb = ttk.Label(self, text="Suma", style="LightText.TLabel")
@@ -183,10 +183,10 @@ class Edit_entry(ttk.Frame):
         self.bind("<<ShowFrame>>", lambda e: self.update_list())
 
         self.entry_type = tk.StringVar(self)
-        self.options = ["Išlaidos", "Pajamos"]
-
         self.suma = tk.StringVar(self)
         self.komentaras = tk.StringVar(self)
+
+        self.options = ["Išlaidos", "Pajamos"]
 
         self.type_lb = ttk.Label(self, text="Tipas", style="LightText.TLabel")
         self.sum_lb = ttk.Label(self, text="Suma", style="LightText.TLabel")
@@ -207,6 +207,9 @@ class Edit_entry(ttk.Frame):
                                      cursor="hand2"
                                      )
         self.status = ttk.Label(self, text="", relief=SUNKEN, anchor=W)
+        scrollbar = Scrollbar(self)
+        self.list = Listbox(self, yscrollcommand=scrollbar.set)
+        self.update_list()
 
         self.type_lb.grid(row=1, column=0, sticky="Ew", padx=10, pady=(10, 0))
         self.sum_lb.grid(row=2, column=0, sticky="Ew", padx=10, pady=(10, 0))
@@ -217,13 +220,9 @@ class Edit_entry(ttk.Frame):
         self.save_btn.grid(row=4, column=1, sticky="Ew", padx=10, pady=(10, 0))
         self.cancel_btn.grid(row=4, column=0, sticky="Ew", padx=10, pady=(10, 0))
         self.status.grid(row=5, columnspan=3, sticky="EW")
-
-        scrollbar = Scrollbar(self)
-        self.list = Listbox(self, yscrollcommand=scrollbar.set)
-        self.update_list()
-
         self.list.grid(row=0, columnspan=3, sticky="EW", padx=10, pady=(10, 0))
         scrollbar.grid(row=0, column=4, sticky="SN")
+
         self.list.bind('<<ListboxSelect>>', self.on_select)
         self.cancel_btn.bind("<Button-1>", self.clean_status)
 
